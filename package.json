@@ -1,0 +1,235 @@
+{
+  "name": "action-buttons",
+  "displayName": "Action Buttons",
+  "description": "Customizable status bar action buttons to run terminal commands, VS Code commands, scripts, and multi-step macros with a single click.",
+  "version": "1.0.0",
+  "publisher": "icu-tools",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Keymaps"
+  ],
+  "keywords": [
+    "action",
+    "buttons",
+    "status bar",
+    "terminal",
+    "scripts",
+    "macros",
+    "shortcuts",
+    "runner"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "actionButtons.refresh",
+        "title": "Action Buttons: Refresh"
+      },
+      {
+        "command": "actionButtons.addButton",
+        "title": "Action Buttons: Add Button"
+      },
+      {
+        "command": "actionButtons.editButton",
+        "title": "Action Buttons: Edit Button"
+      },
+      {
+        "command": "actionButtons.removeButton",
+        "title": "Action Buttons: Remove Button"
+      },
+      {
+        "command": "actionButtons.contextEdit",
+        "title": "Edit Button"
+      },
+      {
+        "command": "actionButtons.contextMoveLeft",
+        "title": "Move Left"
+      },
+      {
+        "command": "actionButtons.contextMoveRight",
+        "title": "Move Right"
+      },
+      {
+        "command": "actionButtons.contextRemove",
+        "title": "Remove Button"
+      },
+      {
+        "command": "actionButtons.contextChangeColor",
+        "title": "Change Color"
+      },
+      {
+        "command": "actionButtons.contextChangeIcon",
+        "title": "Change Icon"
+      },
+      {
+        "command": "actionButtons.contextChangeCommand",
+        "title": "Change Command"
+      },
+      {
+        "command": "actionButtons.toggleTerminalPanel",
+        "title": "Action Buttons: Toggle Terminal Panel"
+      }
+    ],
+    "configuration": {
+      "title": "Action Buttons",
+      "properties": {
+        "actionButtons.buttons": {
+          "type": "array",
+          "default": [],
+          "scope": "window",
+          "markdownDescription": "List of action buttons to display in the status bar. Each button can run terminal commands, VS Code commands, script files, or multi-step macros.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Button label displayed in the status bar."
+              },
+              "command": {
+                "type": "string",
+                "description": "The command to execute. For terminal: a shell command. For vscode: a command ID. For script: a file path."
+              },
+              "commandType": {
+                "type": "string",
+                "enum": [
+                  "terminal",
+                  "vscode",
+                  "script",
+                  "macro"
+                ],
+                "default": "terminal",
+                "markdownDescription": "Type of command to execute.\n- `terminal` — Run a shell command in the integrated terminal.\n- `vscode` — Execute a VS Code editor command.\n- `script` — Run a script file (`.bat`, `.ps1`, `.sh`, `.py`).\n- `macro` — Execute a sequence of steps (multi-step macro)."
+              },
+              "commands": {
+                "type": "array",
+                "description": "Ordered list of macro steps. Only used when commandType is 'macro'.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "command"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "terminal",
+                        "vscode",
+                        "script"
+                      ],
+                      "description": "Type of this macro step."
+                    },
+                    "command": {
+                      "type": "string",
+                      "description": "The command string for this macro step."
+                    },
+                    "delay": {
+                      "type": "number",
+                      "default": 0,
+                      "description": "Delay in milliseconds to wait after this step before executing the next one."
+                    }
+                  }
+                }
+              },
+              "icon": {
+                "type": "string",
+                "description": "Codicon icon name (e.g., 'play', 'terminal', 'beaker'). Browse: https://microsoft.github.io/vscode-codicons/dist/codicon.html"
+              },
+              "color": {
+                "type": "string",
+                "description": "Foreground text color as a hex value (e.g., '#4EC9B0') or CSS color name."
+              },
+              "backgroundColor": {
+                "type": "string",
+                "enum": [
+                  "green",
+                  "yellow",
+                  "orange",
+                  "red",
+                  "blue",
+                  "purple",
+                  "teal"
+                ],
+                "description": "Semantic color name. 'red' shows a red background, 'yellow'/'orange' show a yellow background. Other colors use distinctive foreground text colors."
+              },
+              "tooltip": {
+                "type": "string",
+                "description": "Hover tooltip text."
+              },
+              "singleInstance": {
+                "type": "boolean",
+                "default": true,
+                "description": "Kill the previous terminal before starting a new one."
+              },
+              "focus": {
+                "type": "boolean",
+                "default": true,
+                "description": "Focus the terminal when the command runs."
+              },
+              "confirm": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show a confirmation dialog before running the command."
+              },
+              "cwd": {
+                "type": "string",
+                "description": "Working directory for the command. Supports variable substitution."
+              },
+              "env": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Environment variables to set for the terminal."
+              },
+              "priority": {
+                "type": "number",
+                "default": 0,
+                "description": "Position priority in the status bar. Higher values appear further left."
+              }
+            }
+          }
+        },
+        "actionButtons.defaultColor": {
+          "type": "string",
+          "default": "#FFFFFF",
+          "scope": "window",
+          "description": "Default foreground text color for all buttons (hex or CSS color name)."
+        },
+        "actionButtons.showInTerminal": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Show command output in the integrated terminal."
+        },
+        "actionButtons.reloadOnSave": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Automatically reload buttons when settings.json is saved."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.0"
+  }
+}

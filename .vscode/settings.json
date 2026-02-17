@@ -1,0 +1,37 @@
+{
+    "actionButtons.buttons": [
+        {
+            "name": "Clean",
+            "command": "cmake --build build --target clean",
+            "icon": "trash",
+            "backgroundColor": "green",
+            "confirm": true
+        },
+        {
+            "name": "Build",
+            "command": "cmake --build build",
+            "icon": "tools",
+            "backgroundColor": "yellow"
+        },
+        {
+            "name": "Run",
+            "command": "cmake --build build && ./build/main",
+            "icon": "play",
+            "backgroundColor": "red"
+        },
+        {
+            "name": "Terminal",
+            "commandType": "vscode",
+            "command": "actionButtons.toggleTerminalPanel",
+            "icon": "terminal",
+            "backgroundColor": "purple"
+        },
+        {
+            "name": "Chat",
+            "commandType": "vscode",
+            "command": "workbench.action.chat.toggle",
+            "icon": "comment-discussion",
+            "backgroundColor": "blue"
+        }
+    ]
+}
