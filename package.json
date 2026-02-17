@@ -2,7 +2,7 @@
   "name": "action-buttons",
   "displayName": "Action Buttons",
   "description": "Customizable status bar action buttons to run terminal commands, VS Code commands, scripts, and multi-step macros with a single click.",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "publisher": "icu-tools",
   "license": "MIT",
   "engines": {
